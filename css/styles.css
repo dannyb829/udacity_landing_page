@@ -20,10 +20,9 @@ header {
     grid-template-columns: 1fr 1fr;
     grid-template-areas: 'title nav';
     grid-template-rows: 100%;
-    /* justify-content: end;
-    align-items: center; */
+    align-items: center;
     color:white;
-    padding: 5px;
+    padding: 10px;
 }
 
 main {
@@ -36,6 +35,7 @@ main {
 aside {
     grid-area: side;
     background-color: #E4F2E6;
+    display: grid;
 }
 
 footer {
@@ -49,7 +49,7 @@ footer {
 
 #page-title{
     grid-area: title;
-    margin: 0;
+    margin: 0 10px;
 }
 
 #nav-div{
@@ -58,4 +58,19 @@ footer {
     font-size: 2rem;
     display: flex;
     justify-content: end;
+    align-items: center;
+}
+
+#weather-icon {
+    grid-area: icon;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#weather-temp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-area: temp;
 }

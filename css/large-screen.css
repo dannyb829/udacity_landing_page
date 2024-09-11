@@ -1,10 +1,10 @@
 @media screen 
-and (min-width: 901px) 
+and (min-width: 1201px) 
 {
     
     body {
         grid-template-areas: "head head head head head head"
-                                "main main main side side side"
+                                "main main main main side side"
                                 "foot foot foot foot foot foot";
         grid-template-rows: 10% 85% 5%;
     }

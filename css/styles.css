@@ -1,3 +1,7 @@
+@import url('../css/small-screen.css');
+@import url('../css/medium-screen.css');
+@import url('../css/large-screen.css');
+
 html {
     height: 100%;
 }
@@ -5,24 +9,53 @@ html {
 body {
     height: 100%;
     display: grid;
+    grid-template-columns: repeat(6,1fr);
+    margin: 0;
 }
 
 header {
     grid-area: head;
-    background-color: aquamarine;
+    background-color: #364259;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'title nav';
+    grid-template-rows: 100%;
+    /* justify-content: end;
+    align-items: center; */
+    color:white;
+    padding: 5px;
 }
 
 main {
     grid-area: main;
-    background-color: bisque;
+    background-color: #F1F5E1;
+    overflow: scroll;
+    padding: 5px;
 }
 
 aside {
     grid-area: side;
-    background-color: darkseagreen;
+    background-color: #E4F2E6;
 }
 
 footer {
     grid-area: foot;
-    background-color: brown;
+    background-color: #75BD8D;
+}
+
+.story-img{
+    max-width: 300px;
+}
+
+#page-title{
+    grid-area: title;
+    margin: 0;
+}
+
+#nav-div{
+    grid-area: nav;
+    text-decoration: none;
+    font-size: 2rem;
+    display: flex;
+    justify-content: end;
 }

@@ -4,9 +4,17 @@ and (max-width:1200px) {
     
     body {
         grid-template-areas: "head head head head head head"
-                                "main main main main main side"
+                                "main main main main side side"
                                 "foot foot foot foot foot foot";
         grid-template-rows: 10% 85% 5%;
+    }
+    
+    aside {
+        grid-template-areas: "icon"
+                            "temp"
+                            "."
+                            ".";
+        grid-template-rows: repeat(4,1fr);
     }
 
 }

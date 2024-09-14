@@ -8,12 +8,13 @@
 }
 
     aside {
-        grid-template-areas: "icon temp";
+        grid-template-areas: "main";
         grid-template-rows: 1fr;
     }
 
-
-
+    #details {
+        display: none;
+    }
 
 
 }

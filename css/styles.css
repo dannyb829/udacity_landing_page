@@ -27,20 +27,21 @@ header {
 
 main {
     grid-area: main;
-    background-color: #F1F5E1;
+    background-color: #353345;
     overflow: scroll;
     padding: 5px;
+    color: white;
 }
 
 aside {
     grid-area: side;
-    background-color: #E4F2E6;
     display: grid;
+    color: #0b0a4d;
 }
 
 footer {
     grid-area: foot;
-    background-color: #75BD8D;
+    background-color: #49465a;
 }
 
 .story-img{
@@ -61,16 +62,39 @@ footer {
     align-items: center;
 }
 
-#weather-icon {
-    grid-area: icon;
-    display: flex;
+#weather-main {
+    display:grid;
+    grid-template-areas: "icon temp";
+    grid-area: main;
     align-items: center;
-    justify-content: center;
+    justify-content:space-evenly;
 }
 
-#weather-temp {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+#icon {
+    grid-area: icon;
+}
+
+#temp {
     grid-area: temp;
+}
+
+#details {
+    text-align:center;
+}
+
+nav > a {
+    margin: 0 10px;
+}
+
+.headline {
+    padding: 15px;
+}
+
+.headline:hover {
+    opacity: .5;
+    transition-duration: .1s;
+}
+
+.headline-heading{
+    margin-left: 15px;
 }

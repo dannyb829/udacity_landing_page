@@ -19,6 +19,7 @@ function mapHeadlinesToDOM(headlines){
         <h3>${story.title}</h3>
         <p>${story.description}</p>
         <hr>`
+        storyDiv.classList.add('headline')
         // append story to DOM
         headlineSection.appendChild(storyDiv)
         
@@ -35,23 +36,53 @@ async function retrieveWeather() {
 }
 
 // grab each weather section
-const weatherIcon = document.getElementById('weather-icon')
-const weatherTemp = document.getElementById('weather-temp')
+const weatherMain = document.getElementById('weather-main')
+const weatherSection = document.getElementById('weather-section')
 
 function mapWeatherToDOM(weather){
 // recieve weather object from request
 // construct weather icon based on data
     const icon = document.createElement('img')
     icon.src = weather.current.condition.icon
-    icon.style.width = '70%'
-    weatherIcon.append(icon)
+    icon.style.width = '150px'
+    icon.id = 'icon'
+    weatherMain.append(icon)
     //append to DOM
 //construct weather temperature based on data
-    const temperature = document.createElement('h1')
-    temperature.innerText = weather.current.temp_f
+    const temperature = document.createElement('h2')
+    temperature.innerText = weather.current.temp_f + 'ºF'
     temperature.style.fontSize = '3rem'
-    weatherTemp.append(temperature)
+    temperature.id = 'temp'
+    weatherMain.append(temperature)
     //append to DOM
+
+// select a few details from weather data to display more info
+//at least 3 wind with direction / humidity / real feel 
+//add details to DOM
+//dtails div to house all details
+    const details = document.createElement('div')
+    details.id = 'details'
+    weatherSection.append(details)
+
+    const location = document.createElement('h2')
+    location.innerText = `The city of ${weather.location.name}, ${weather.location.region}`
+    location.id = 'local'
+    details.append(location)
+
+    const windDetails = document.createElement('h2')
+    windDetails.innerText = `${weather.current.wind_dir} ward winds at ${weather.current.wind_mph}mph`
+    location.id = 'wind'
+    details.append(windDetails)
+
+    const realFeel = document.createElement('h2')
+    realFeel.innerText = `real feel ${weather.current.feelslike_f}ºF`
+    realFeel.id = 'real'
+    details.append(realFeel)
+
+    const humidityDetail = document.createElement('h2')
+    humidityDetail.innerText = `${weather.current.humidity}% humidity with precipitation at ${weather.current.precip_in} inches`
+    humidityDetail.id = 'humid'
+    details.append(humidityDetail)
 }
 
 //load page

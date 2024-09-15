@@ -1,6 +1,7 @@
 @import url('../css/small-screen.css');
 @import url('../css/medium-screen.css');
 @import url('../css/large-screen.css');
+@import url('../css/news.css');
 
 html {
     height: 100%;
@@ -17,9 +18,6 @@ header {
     grid-area: head;
     background-color: #364259;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: 'title nav';
-    grid-template-rows: 100%;
     align-items: center;
     color:white;
     padding: 10px;
@@ -33,7 +31,7 @@ main {
     color: white;
 }
 
-aside {
+#weather-section {
     grid-area: side;
     display: grid;
     color: #0b0a4d;
@@ -56,16 +54,16 @@ footer {
 #nav-div{
     grid-area: nav;
     text-decoration: none;
-    font-size: 2rem;
+    font-size: 1rem;
     display: flex;
-    justify-content: end;
+    
     align-items: center;
 }
 
 #weather-main {
     display:grid;
     grid-template-areas: "icon temp";
-    grid-area: main;
+    grid-area: wmain;
     align-items: center;
     justify-content:space-evenly;
 }
@@ -84,7 +82,10 @@ footer {
 
 nav > a {
     margin: 0 10px;
+    text-decoration: none;
+    color: white;
 }
+
 
 .headline {
     padding: 15px;

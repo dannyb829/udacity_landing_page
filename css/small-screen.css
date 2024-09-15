@@ -7,14 +7,30 @@
     grid-template-rows: 10% 15% 70% 5%;
 }
 
-    aside {
-        grid-template-areas: "main";
+header {
+    grid-template-areas: 'nav';
+    grid-template-columns: 1fr;
+}
+
+#page-title {
+    display: none;
+}
+#weather-section  {
+        grid-template-areas: "wmain";
         grid-template-rows: 1fr;
     }
 
-    #details {
+#details {
         display: none;
     }
+#article-sidebar {
+    grid-template-areas: "actions actions";
+    grid-template-rows: 1fr;
+}
+
+#nav-div{
+    justify-content: center;
+}
 
 
 }

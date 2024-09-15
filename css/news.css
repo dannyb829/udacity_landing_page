@@ -1,0 +1,36 @@
+#news-section {
+    display: grid;
+    grid-template-areas: "img img img"
+                        "info info info";
+    grid-template-rows: 30% 70%
+}
+
+#news-image {
+    grid-area: img;
+    background-size:cover;
+}
+
+#news-info {
+    grid-area: info;
+    overflow: scroll;
+}
+
+.article-button {
+    margin: 15px;
+    background-color: deepskyblue;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    height:20px;
+}
+
+#article-sidebar {
+    display: grid;
+    grid-area: side;
+}
+
+#article-actions {
+    grid-area: actions;
+    display: flex;
+    justify-content: space-evenly;
+}

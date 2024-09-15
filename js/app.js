@@ -1,5 +1,9 @@
+let headlines = []
+let showArticle = 0
+
+
 // network request to GET stories
-async function retrieveHeadlines() {
+function retrieveHeadlines() {
     fetch("https://api.thenewsapi.com/v1/news/top?api_token=s9yWxtRi1Kd6djURAF9WudoleoEnw4gtget2NeeB&locale=us&limit=3")
 // catch error if network request fails        
     .then(resp => resp.ok? resp.json() : console.warn("error loading"))
@@ -9,10 +13,12 @@ async function retrieveHeadlines() {
 
 //grab news section
 const headlineSection = document.getElementById("headline-showcase")
+const newsSection = document.getElementById('news-section')
 
-function mapHeadlinesToDOM(headlines){
+function mapHeadlinesToDOM(headlinesParam){
+    headlines = headlinesParam
     // after response from newsAPI take data and map to individual dom elements for display
-    headlines.map(story => {
+    if (headlineSection) headlinesParam.map(story => {
         const storyDiv = document.createElement('div')
         //set story details
         storyDiv.innerHTML = `<img class='story-img' src=${story.image_url}>
@@ -24,34 +30,36 @@ function mapHeadlinesToDOM(headlines){
         headlineSection.appendChild(storyDiv)
         
     })
-}
 
-async function retrieveWeather() {
+    if (newsSection) showNewsArticle(headlinesParam[showArticle])
+}
+// grab each weather section
+const weatherMain = document.getElementById('weather-main')
+const weatherSection = document.getElementById('weather-section')
+
+function retrieveWeather() {
     // network request to weather API
     fetch("http://api.weatherapi.com/v1/current.json?key=aff767064e2c48e4b8f212433241109&q=cleveland&aqi=no")
     .then(resp => resp.ok ? resp.json() : console.warn('error loading'))
     //catch error if request fails
-    .then(mapWeatherToDOM)
+    .then(data => {if (weatherMain) mapWeatherToDOM(data)})
     //parsed weather data injected to mapweather function 
 }
 
-// grab each weather section
-const weatherMain = document.getElementById('weather-main')
-const weatherSection = document.getElementById('weather-section')
 
 function mapWeatherToDOM(weather){
 // recieve weather object from request
 // construct weather icon based on data
     const icon = document.createElement('img')
     icon.src = weather.current.condition.icon
-    icon.style.width = '150px'
+    icon.style.width = '150%'
     icon.id = 'icon'
     weatherMain.append(icon)
     //append to DOM
 //construct weather temperature based on data
     const temperature = document.createElement('h2')
     temperature.innerText = weather.current.temp_f + 'ºF'
-    temperature.style.fontSize = '3rem'
+    temperature.style.fontSize = '2rem'
     temperature.id = 'temp'
     weatherMain.append(temperature)
     //append to DOM
@@ -80,7 +88,7 @@ function mapWeatherToDOM(weather){
     details.append(realFeel)
 
     const humidityDetail = document.createElement('h2')
-    humidityDetail.innerText = `${weather.current.humidity}% humidity with precipitation at ${weather.current.precip_in} inches`
+    humidityDetail.innerText = `${weather.current.humidity}% humidity with precipitation at ${weather.current.precip_in}"`
     humidityDetail.id = 'humid'
     details.append(humidityDetail)
 }
@@ -88,3 +96,29 @@ function mapWeatherToDOM(weather){
 //load page
 retrieveHeadlines()
 retrieveWeather()
+
+
+
+function showNewsArticle(article) {
+    console.log(article)
+    const image = document.getElementById('news-image')
+    image.style.backgroundImage = `url(${article.image_url})`
+    const title = document.getElementById('news-headline')
+    title.innerText = article.title
+    const author = document.getElementById('news-author')
+    author.innerText = article.source
+    const content = document.getElementById('news-article')
+    content.innerText = article.snippet + content.innerText
+    const link = document.getElementById('article-link')
+    link.href = article.url
+    
+}
+
+const nextArticle = document.getElementById('article-change')
+
+nextArticle.addEventListener('click', () => {
+    if(showArticle === 2) showArticle = 0
+    else showArticle += 1
+    retrieveHeadlines()
+})
+

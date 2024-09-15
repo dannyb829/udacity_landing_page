@@ -9,8 +9,8 @@ and (min-width: 1201px)
         grid-template-rows: 10% 85% 5%;
     }
 
-    aside {
-        grid-template-areas: "main"
+    #weather-section  {
+        grid-template-areas: "wmain"
                             "."
                             "."
                             ".";
@@ -18,4 +18,20 @@ and (min-width: 1201px)
     }
 
 
+    header {
+        grid-template-areas: 'title nav';
+        grid-template-rows: 1fr
+    }
+
+    #nav-div{
+        justify-content: end;
+    }
+
+    #article-sidebar {
+        grid-template-areas: "actions actions"
+                                ". ."
+                                ". ."
+                                ". .";
+        grid-template-rows: repeat(4,1fr);
+    }
 }

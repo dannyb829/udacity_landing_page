@@ -50,6 +50,7 @@ function retrieveWeather() {
 function mapWeatherToDOM(weather){
 // recieve weather object from request
 // construct weather icon based on data
+console.log(weather)
     const icon = document.createElement('img')
     icon.src = weather.current.condition.icon
     icon.style.width = '150%'

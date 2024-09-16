@@ -1,0 +1,15 @@
+#about-section {
+    padding:20px;
+}
+
+#globe-img {
+    max-width:200px;
+    max-height: 150px;
+    margin:20px;
+}
+
+#about-sidebar{
+    grid-area: side;
+    display: flex;
+    justify-content: center;
+}

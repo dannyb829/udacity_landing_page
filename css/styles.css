@@ -2,6 +2,7 @@
 @import url('../css/medium-screen.css');
 @import url('../css/large-screen.css');
 @import url('../css/news.css');
+@import url('../css/about.css');
 
 html {
     height: 100%;

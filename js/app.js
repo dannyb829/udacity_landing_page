@@ -1,10 +1,16 @@
+// these variables are used to store news articles for use thoughout site
+// headlines to store articles / showArticle to set index in headlines to display on news.html page
 let headlines = []
 let showArticle = 0
+// use of local storage to save article choice for news page
+let showArticleNum = window.localStorage.getItem('showArticle') ? parseInt(window.localStorage.getItem('showArticle')) : showArticle
 
 
 // network request to GET stories
 function retrieveHeadlines() {
-    fetch("https://api.thenewsapi.com/v1/news/top?api_token=s9yWxtRi1Kd6djURAF9WudoleoEnw4gtget2NeeB&locale=us&limit=3")
+    //articles retrieved from TheNewsAPI. if limit is reached swap the api_token in url
+    // to s9yWxtRi1Kd6djURAF9WudoleoEnw4gtget2NeeB
+    fetch("https://api.thenewsapi.com/v1/news/top?api_token=tE4mlKSRWbOOIT3rULjcUBOuFLOaQEzlUdHsTjm4&locale=us&limit=3")
 // catch error if network request fails        
     .then(resp => resp.ok? resp.json() : console.warn("error loading"))
 // on successful request set response data to headlines array, these are the stories
@@ -18,21 +24,39 @@ const newsSection = document.getElementById('news-section')
 function mapHeadlinesToDOM(headlinesParam){
     headlines = headlinesParam
     // after response from newsAPI take data and map to individual dom elements for display
-    if (headlineSection) headlinesParam.map(story => {
-        const storyDiv = document.createElement('div')
-        //set story details
-        storyDiv.innerHTML = `<img class='story-img' src=${story.image_url}>
-        <h3>${story.title}</h3>
-        <p>${story.description}</p>
-        <hr>`
-        storyDiv.classList.add('headline')
-        // append story to DOM
-        headlineSection.appendChild(storyDiv)
-        
-    })
+    // conditional only append headlines to DOM if on main page
+    if (headlineSection) {
+        for (let i = 0; i < headlinesParam.length; i++){
+            const storyDiv = document.createElement('div')
+            //set story details
+            const story = headlinesParam[i]
+            storyDiv.innerHTML = `<img class='story-img' src=${story.image_url}>
+            <h3>${story.title}</h3>
+            <p>${story.description}</p>
+            <hr>`
+            storyDiv.id = i
+            storyDiv.classList.add('headline', 'clickable')
 
-    if (newsSection) showNewsArticle(headlinesParam[showArticle])
+            headlineSection.appendChild(storyDiv)
+
+            // make articles clickable
+            // add eventlistener , on click change the showArticle to the articles id 
+            // so that when navigated to news page the right article is displayed
+            // append story to DOM
+
+            storyDiv.addEventListener('click', () => {
+                console.log(storyDiv)
+                window.location = "./static/news.html"
+                window.localStorage.setItem('showArticle',parseInt(storyDiv.id))
+            })
+        }
+
+    }
+
+
+    if (newsSection) showNewsArticle(headlinesParam[showArticleNum])
 }
+
 // grab each weather section
 const weatherMain = document.getElementById('weather-main')
 const weatherSection = document.getElementById('weather-section')
@@ -44,13 +68,13 @@ function retrieveWeather() {
     //catch error if request fails
     .then(data => {if (weatherMain) mapWeatherToDOM(data)})
     //parsed weather data injected to mapweather function 
+    // conditionally display depending on page selected
 }
 
 
 function mapWeatherToDOM(weather){
 // recieve weather object from request
 // construct weather icon based on data
-console.log(weather)
     const icon = document.createElement('img')
     icon.src = weather.current.condition.icon
     icon.style.width = '150%'
@@ -69,6 +93,7 @@ console.log(weather)
 //at least 3 wind with direction / humidity / real feel 
 //add details to DOM
 //dtails div to house all details
+// append each to DOM
     const details = document.createElement('div')
     details.id = 'details'
     weatherSection.append(details)
@@ -101,7 +126,7 @@ retrieveWeather()
 
 
 function showNewsArticle(article) {
-    console.log(article)
+    // inject details of selected article into news page
     const image = document.getElementById('news-image')
     image.style.backgroundImage = `url(${article.image_url})`
     const title = document.getElementById('news-headline')
@@ -116,10 +141,11 @@ function showNewsArticle(article) {
 }
 
 const nextArticle = document.getElementById('article-change')
-
+// toggle next article on news page using showArticle Variable
 nextArticle.addEventListener('click', () => {
-    if(showArticle === 2) showArticle = 0
-    else showArticle += 1
+    //cycles through 3 articles starting at 0 index
+    if(showArticleNum === 2) showArticleNum = 0
+    else showArticleNum += 1
     retrieveHeadlines()
 })
 

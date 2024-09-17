@@ -45,7 +45,6 @@ function mapHeadlinesToDOM(headlinesParam){
             // append story to DOM
 
             storyDiv.addEventListener('click', () => {
-                console.log(storyDiv)
                 window.location = "./static/news.html"
                 window.localStorage.setItem('showArticle',parseInt(storyDiv.id))
             })

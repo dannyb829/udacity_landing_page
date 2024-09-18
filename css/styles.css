@@ -101,3 +101,6 @@ nav > a {
     margin-left: 15px;
 }
 
+.active {
+    color:cyan;
+}

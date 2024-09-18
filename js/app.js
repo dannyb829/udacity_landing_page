@@ -2,9 +2,21 @@
 // headlines to store articles / showArticle to set index in headlines to display on news.html page
 let headlines = []
 let showArticle = 0
-// use of local storage to save article choice for news page
-let showArticleNum = window.localStorage.getItem('showArticle') ? parseInt(window.localStorage.getItem('showArticle')) : showArticle
 
+//lorem ipsum placeholder text 
+const lorem = `Lorem ipsum odor amet, consectetuer adipiscing elit. Aptent imperdiet rhoncus himenaeos praesent penatibus. Elementum nascetur efficitur auctor ex lacinia mollis. Ornare arcu purus tortor neque nullam inceptos neque ultricies. Habitant semper aenean condimentum quisque molestie finibus ad. Tortor tempus nulla quisque ad ut elit. Auctor conubia mus accumsan platea, finibus nascetur. Integer neque platea litora class penatibus nullam mauri Vestibulum dui fermentum sed nec quisque nec. Odio penatibus enim maximus integer sed fringilla quam senectus. Magna massa dictumst fames, maecenas mollis purus gravida. Feugiat ultricies lacus nibh eu sollicitudin a lacus. Risus ac purus quis praesent at cursus integer. Arcu varius montes integer, etiam vulputate ac. Condimentum sed maecenas nibh morbi arcu. Ipsum odio adipiscing elit facilisis ornare amet. Aliquet natoque mus platea interdum integer venenatis. Integer nam torquent libero sed nec ridiculus lacus risus. Integer eu condimentum in senectus neque porttitor potenti. Ut facilisis lacinia nascetur fringilla aenean rutrum. Nullam curae tempus tincidunt morbi faucibus aptent ante venenatis. Mollis fringilla adipiscing magnis ipsum enim cursus sem sagittis. Condimentum sodales ornare curae consectetur neque aliquet? Porta bibendum eros lacinia justo rutrum. Ridiculus nam quam odio gravida penatibus egestas tellus. Eget auctor cursus porta elementum habitant. Feugiat blandit sociosqu pellentesque vestibulum maximus mus proin natoque. Ultricies sociosqu est penatibus posuere dictumst facilisis mi? Porta penatibus sem convallis commodo fermentum. Aenean duis class ultrices vitae penatibus semper arcu himenaeos. Dignissim vestibulum hac vivamus; posuere dictumst luctus. Venenatis ante aliquam tristique quisque phasellus vitae pretium nostra. Justo enim amet facilisis rutrum magnis orci sed eleifend. Penatibus ipsum massa non mollis dapibus nisi hac urna. At eleifend eros tincidunt at praesent. Per habitant est maximus adipiscing ante habitant. Curabitur ut magna efficitur sem faucibus ad. Cras sem sociosqu habitasse cursus parturient vulputate velit tristique? Aliquam sodales eros diam massa, felis imperdiet parturient. Justo dolor porta augue proin metusAccumsan justo vivamus adipiscing purus orci, porttitor purus erat. Sapien lacus dis pulvinar magna facilisis facilisis nulla. Varius pellentesque velit maecenas inceptos faucibus proin lectus consequat. Mus vitae facilisis posuere vitae eleifend nam himenaeos. Massa faucibus dictum phasellus metus maximus eros at fringilla. Tempor suspendisse himenaeos sapien, mattis aliquam pretium quam platea. Sociosqu et cras morbi habitasse non non augue netus vehicula. Habitasse in facilisi vehicula turpis non est. Maximus sociosqu duis iaculis sodales orci. Nascetur etiam non sit platea posuere elementum. Himenaeos consequat magnis auctor iaculis tellus laoreet platea dapibus. Eleifend dolor lacus; convallis interdum ultrices felis. Eu porta penatibus habitant lacinia hac felis platea ridiculus. Fringilla mauris enim natoque primis, facilisi aliquet phasellus. Cras efficitur diam elit conubia vivamus sociosqu aptent nascetur. Habitant vulputate taciti iaculis augue litora. Parturient praesent lacus condimentum praesent blandit metus. Posuere pellentesque vivamus finibus at etiam ridiculus interdum euismod. Molestie gravida proin bibendum gravida magna lobortis, fusce cras. Sapien vehicula facilisis ut est convallis. Facilisis sit lacus molestie nunc adipiscing cubilia; habitant curae mauris. Nunc ex class aliquet torquent porta hac urna dolor. Fames risus diam adipiscing luctus semper placerat ante ligula. Dictumst auctor quam efficitur commodo vitae leo eu euismod integer. Congue sed justo consectetur pulvinar neque dignissim. Gravida habitasse nostra venenatis ante, bibendum dui sociosqu. Eget rhoncus mauris vivamus quis mollis nullam nullam? Ex rutrum magna taciti, condimentum sit erat massa. Curabitur cursus duis massa, maximus fusce egestas. Tincidunt maecenas lobortis aliquet eu nullam. Nibh senectus dictum phasellus rutrum aptent massa. Ullamcorper nullam primis inceptos vitae interdum. Vivamus odio laoreet vestibulum rutrum elit in dui. Magna porttitor non dis erat sem. Aliquam curae luctus torquent magnis adipiscing platea ipsum sem. Himenaeos imperdiet lobortis dictum fames sociosqu facilisis ut vehicula est. Lacinia pellentesque efficitur neque; porttitor ante laoreet. Dignissim cras ornare pharetra diam in sed tempus a risus. Lacus montes ridiculus porta eu sapien at erat auctor nisi. Amet quis accumsan morbi, facilisis varius nunc.`;
+// event listeners for nav-buttons
+function navButtonEvents(){
+    const buttons = document.getElementsByClassName('nav-button')
+
+    for (const button of buttons){
+        button.addEventListener('click',() => {
+            switchPage(button.name)
+        })
+    }
+}
+
+navButtonEvents()
 
 // network request to GET stories
 function retrieveHeadlines() {
@@ -45,15 +57,13 @@ function mapHeadlinesToDOM(headlinesParam){
             // append story to DOM
 
             storyDiv.addEventListener('click', () => {
-                window.location = "./static/news.html"
-                window.localStorage.setItem('showArticle',parseInt(storyDiv.id))
+                showArticle = parseInt(storyDiv.id)
+                switchPage('news')
             })
         }
 
     }
 
-
-    if (newsSection) showNewsArticle(headlinesParam[showArticleNum])
 }
 
 // grab each weather section
@@ -133,18 +143,67 @@ function showNewsArticle(article) {
     const author = document.getElementById('news-author')
     author.innerText = article.source
     const content = document.getElementById('news-article')
-    content.innerText = article.snippet + content.innerText
-    const link = document.getElementById('article-link')
-    link.href = article.url
+    content.innerText = article.snippet + lorem
+    // const link = document.getElementById('article-link')
+    // link.href = article.url
     
 }
 
-const nextArticle = document.getElementById('article-change')
-// toggle next article on news page using showArticle Variable
-nextArticle.addEventListener('click', () => {
-    //cycles through 3 articles starting at 0 index
-    if(showArticleNum === 2) showArticleNum = 0
-    else showArticleNum += 1
-    retrieveHeadlines()
-})
+// const nextArticle = document.getElementById('article-change')
+// // toggle next article on news page using showArticle Variable
+// nextArticle.addEventListener('click', () => {
+//     //cycles through 3 articles starting at 0 index
+//     if(showArticle === 2) showArticle = 0
+//     else showArticle += 1
+//     retrieveHeadlines()
+// })
 
+// direct to next page logic
+
+function switchPage(page) {
+   // remove active class from nav place on actual active
+    const current = document.getElementsByClassName('active')[0]
+    current.classList.remove('active')
+    const next = document.querySelector(`[name = ${page}]`)
+    next.classList.add('active')
+
+    switch (page) {
+        case 'home':
+            window.location = './index.html'
+        break;
+        case 'news':
+            slapNewsOnToDom(page)
+        break;
+        case 'contact':
+            slapContactOnToDOM(page)
+        break;
+        case 'about':
+            slapAboutOnToDOM(page)
+        break;
+    }
+}
+// build out news page
+
+function slapNewsOnToDom(){
+    const article = headlines[showArticle]
+    console.log(article, showArticle)
+    const newsPage = document.getElementsByTagName('main')[0]
+    newsPage.id = 'news-section'
+    newsPage.innerHTML = `<div id="news-image"></div>
+            <div id="news-inf">
+                <h1 id="news-headline"></h1>
+                <h2 id="news-author"></h1>
+                <p id="news-article"> 
+                </p>
+            </div>`;
+    // inject article details
+    showNewsArticle(article)
+}
+// build out about page 
+function slapAboutOnToDOM(){
+
+}
+// build out contact page 
+function slapContactOnToDOM(){
+
+}
